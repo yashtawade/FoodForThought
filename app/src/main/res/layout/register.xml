@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.yashtawade.foodforthought.MainActivity"
+    android:background="@drawable/a121018819">
+
+    <RelativeLayout
+        android:id="@+id/activity_main"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.yashtawade.foodforthought.MainActivity"
+        android:alpha="1"
+        android:background="@color/cast_intro_overlay_background_color"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="1"
+            android:alpha="1"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="1">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:id="@+id/name"
+                        android:textColor = "#ffffff"
+                        android:textColorHint="#ffffff"
+                        android:layout_weight="1"
+                        android:hint="Name" />
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:textColorHint="#ffffff"
+                        android:textColor = "#ffffff"
+                        android:id="@+id/username"
+                        android:layout_weight="1"
+                        android:hint="Username" />
+                </LinearLayout>
+
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:ems="10"
+                    android:textColorHint="#ffffff"
+                    android:textColor = "#ffffff"
+                    android:id="@+id/email"
+                    android:hint="E-mail Address" />
+
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:ems="10"
+                    android:textColorHint="#ffffff"
+                    android:textColor = "#ffffff"
+                    android:id="@+id/pass1"
+                    android:hint="Password" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:textColorHint="#ffffff"
+                        android:textColor = "#ffffff"
+                        android:id="@+id/pass2"
+                        android:layout_weight="1"
+                        android:hint="Re-type Password" />
+                </LinearLayout>
+
+                <Button
+                    android:text="Register"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/bSignUp"
+                    android:textColor = "#FFFFFF"
+                    android:background="@android:color/holo_orange_dark"
+                    android:onClick="onRegisterClick" />
+
+                <TextView
+                    android:text="Already a registered user?"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView3"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:text="Sign In"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button"
+                    tools:background="@android:color/holo_orange_dark"
+                    tools:layout_width="wrap_content"
+                    android:background="@android:color/holo_orange_dark"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:textColor="@android:color/background_light"
+                    android:textAlignment="center"
+                    android:onClick="takeBack" />
+
+                <com.google.android.gms.ads.AdView
+                    android:layout_width="320dp"
+                    android:layout_height="match_parent"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="@string/banner_ad_unit_id"
+                    android:id="@+id/adView"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="56dp">
+
+                </com.google.android.gms.ads.AdView>
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>
