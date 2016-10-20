@@ -9,7 +9,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
-public class Welcome extends AppCompatActivity {
+public class WelcomeActivity extends AppCompatActivity {
+
+    Button search_recipe_welcome_button;
+    Button missing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +30,19 @@ public class Welcome extends AppCompatActivity {
             }
         });
 
-        Button missing = (Button) findViewById(R.id.missing);
+        missing = (Button) findViewById(R.id.missing);
         missing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(),Nearby.class));
+            }
+        });
+
+        search_recipe_welcome_button = (Button) findViewById(R.id.search_recipe_welcome_button);
+        search_recipe_welcome_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), SearchActivity.class));
             }
         });
     }
