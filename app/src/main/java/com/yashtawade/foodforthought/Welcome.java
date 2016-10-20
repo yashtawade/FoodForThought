@@ -34,6 +34,13 @@ public class Welcome extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),Nearby.class));
             }
         });
+        Button searchby = (Button) findViewById(R.id.searchbyingri);
+        searchby.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),Searchbyingri.class));
+            }
+        });
     }
 
 }
