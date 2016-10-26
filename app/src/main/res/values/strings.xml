@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">FoodForThought</string>
-    <string name="emptyString" />
-    <string name="emptyString1" />
+    <string name="emptyString"/>
+    <string name="emptyString1"/>
     <string name="title_activity_navigation">NavigationActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

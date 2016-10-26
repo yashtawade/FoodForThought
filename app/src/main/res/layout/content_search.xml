@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_search"
@@ -9,37 +9,49 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+              android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.yashtawade.foodforthought.Search"
+    tools:context="com.yashtawade.foodforthought.SearchActivity"
     tools:showIn="@layout/activity_search">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="77dp"
-        android:id="@+id/editText2"
-        android:hint="Missing ingrediant" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:text="Search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editText2"
-        android:layout_alignRight="@+id/editText2"
-        android:layout_alignEnd="@+id/editText2"
-        android:id="@+id/button3" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:color="#00f"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:layout_weight="1"
+            android:layout_alignParentTop="true"
+            android:id="@+id/search_recipe_edit_text"
+            android:hint="Missing ingrediant" />
 
-    <TextView
-        android:text="What are you searching for ?"
+        <Button
+            android:id="@+id/search_recipe_button"
+            android:text="Search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"/>
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/recipe_result"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView4"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="47dp" />
-</RelativeLayout>
+        android:layout_height="0dp"
+        android:layout_below="@+id/search_recipe_button"
+        android:divider="#ff909090"
+        android:dividerHeight="1dp"
+        android:layout_weight="1"
+        android:scrollbars="none" />
+
+</LinearLayout>

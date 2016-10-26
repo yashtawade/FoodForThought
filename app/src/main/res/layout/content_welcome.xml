@@ -11,7 +11,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.yashtawade.foodforthought.Welcome"
+    tools:context="com.yashtawade.foodforthought.WelcomeActivity"
     tools:showIn="@layout/activity_welcome"
     android:background="@drawable/a98091154">
 
@@ -32,6 +32,17 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="68dp"
         android:id="@+id/missing"
+        android:background="@android:color/holo_orange_dark"
+        android:textColor="@android:color/background_light" />
+
+    <Button
+        android:text="Recipe Search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/missing"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="68dp"
+        android:id="@+id/search_recipe_welcome_button"
         android:background="@android:color/holo_orange_dark"
         android:textColor="@android:color/background_light" />
 

@@ -12,7 +12,29 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import cn.finalteam.okhttpfinal.BaseHttpRequestCallback;
+import cn.finalteam.okhttpfinal.HttpRequest;
+import cn.finalteam.okhttpfinal.RequestParams;
+
 public class Http {
+
+    RequestParams mParams;
+
+    public Http(){
+        mParams = new RequestParams();
+    }
+
+    public void add(String key, String value){
+        mParams.addFormDataPart(key,value);
+    }
+
+    public void get(String url, BaseHttpRequestCallback callback){
+        HttpRequest.get(url,callback);
+    }
+
+    public void post(String url, BaseHttpRequestCallback callback){
+        HttpRequest.post(url,callback);
+    }
 
     public String read(String httpUrl) throws IOException {
         String httpData = "";
