@@ -57,7 +57,7 @@
             android:name=".Nearby"
             android:label="@string/title_activity_nearby"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Searchbyingri" />
+
         <activity android:name=".recipe"></activity>
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
