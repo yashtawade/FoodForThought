@@ -1,4 +1,4 @@
-package com.yashtawade.foodforthought;
+package com.yashtawade.foodforthought.activities;
 
 import android.content.pm.PackageManager;
 import android.location.Criteria;
@@ -28,8 +28,10 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.vision.text.Text;
+import com.yashtawade.foodforthought.GooglePlacesReadTask;
+import com.yashtawade.foodforthought.R;
 
-public class Nearby extends AppCompatActivity implements OnMapReadyCallback{
+public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallback{
 
 
     private static final String GOOGLE_API_KEY = "AIzaSyD-dpypUOszI9vXG_-N-MeoVwDnYeQgdYk";

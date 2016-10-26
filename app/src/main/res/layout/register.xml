@@ -10,7 +10,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.yashtawade.foodforthought.MainActivity"
+    tools:context="com.yashtawade.foodforthought.activities.MainActivity"
     android:background="@drawable/a121018819">
 
     <RelativeLayout
@@ -21,7 +21,7 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context="com.yashtawade.foodforthought.MainActivity"
+        tools:context="com.yashtawade.foodforthought.activities.MainActivity"
         android:alpha="1"
         android:background="@color/cast_intro_overlay_background_color"
         android:layout_alignParentTop="true"

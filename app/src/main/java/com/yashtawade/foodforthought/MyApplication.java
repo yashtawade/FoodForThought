@@ -14,7 +14,7 @@ public class MyApplication extends Application{
 
         OkHttpFinalConfiguration.Builder builder =
                 new OkHttpFinalConfiguration.Builder();
-        //标准http请求头
+        //standard http request header
         Headers commonHeaders = new Headers.Builder().add("X-Mashape-Key:eSTTv3Urw2mshZJrgoQZoKJbwtmDp1AE9gajsnm5CFL4X5DDw6").build();
         builder.setCommenHeaders(commonHeaders);
 

@@ -1,4 +1,4 @@
-package com.yashtawade.foodforthought;
+package com.yashtawade.foodforthought.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.yashtawade.foodforthought.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void clickRegister(View view){
         if (view.getId() == R.id.register){
-            Intent i = new Intent(MainActivity.this, Register.class);
+            Intent i = new Intent(MainActivity.this, RegisterActivity.class);
             startActivity(i);
         }
 
