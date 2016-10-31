@@ -33,6 +33,7 @@ public class WelcomeActivity extends AppCompatActivity {
             }
         });
 
+        //to the missing page
         missing = (Button) findViewById(R.id.missing);
         missing.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +42,7 @@ public class WelcomeActivity extends AppCompatActivity {
             }
         });
 
+        //to the search page
         search_recipe_welcome_button = (Button) findViewById(R.id.search_recipe_welcome_button);
         search_recipe_welcome_button.setOnClickListener(new View.OnClickListener() {
             @Override

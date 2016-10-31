@@ -35,25 +35,31 @@ public class SearchActivity extends AppCompatActivity {
     public ImgListAdapter adapter;
     public ProgressDialog dialog;
 
+    //handle the response after http request
     BaseHttpRequestCallback mCallback = new BaseHttpRequestCallback(){
 
         @Override
         public void onResponse(Response httpResponse, String response, Headers headers) {
             List<Recipe> recipes = JSON.parseArray(response, Recipe.class);
 
+            //clear the result from the last search
             result_list.clear();
 
+            //add the recipes to the top
             for (Recipe recipe: recipes) {
                 if(recipe.getMissedIngredientCount() != 0){
                     result_list.add(recipe);
                 }
             }
 
+            //add the suggested recipes to the bottom
             for (Recipe recipe: recipes) {
                 if(recipe.getMissedIngredientCount() == 0){
                     result_list.add(recipe);
                 }
             }
+
+            //use adapter to show the recipe list
             if(adapter == null) {
                 result = (ListView) findViewById(R.id.recipe_result);
                 ImgListAdapter adapter = new ImgListAdapter(SearchActivity.this);
@@ -64,6 +70,7 @@ public class SearchActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
 
+            //loading dialog dismiss
             dialog.dismiss();
 
             /*
@@ -83,6 +90,7 @@ public class SearchActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //loading dialog initialize
         dialog = new ProgressDialog(this);
         dialog.setMessage("Loading");
 
@@ -95,6 +103,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+        //create search button and click event
         search_recipe_button = (Button) findViewById(R.id.search_recipe_button);
         search_recipe_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,11 +115,13 @@ public class SearchActivity extends AppCompatActivity {
 
                 String[] ingredients = input.split(",");
                 String url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=true&limitLicense=false&number=20&ranking=1&ingredients=";
+                //concat the url
                 for(String ingredient : ingredients) {
                     url = url + ingredient.trim() + ",";
                 }
                 url = url.substring(0, url.length() - 1);   //delete the useless ,
 
+                //send asynchronous http request
                 Http httpRequest = new Http();
                 httpRequest.get(url, mCallback);
             }
