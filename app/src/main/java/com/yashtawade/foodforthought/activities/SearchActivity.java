@@ -1,12 +1,14 @@
 package com.yashtawade.foodforthought.activities;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -15,6 +17,7 @@ import com.alibaba.fastjson.JSON;
 import com.yashtawade.foodforthought.Http;
 import com.yashtawade.foodforthought.R;
 import com.yashtawade.foodforthought.adapters.ImgListAdapter;
+import com.yashtawade.foodforthought.constants.FFTConstant;
 import com.yashtawade.foodforthought.models.Recipe;
 
 import java.util.ArrayList;
@@ -25,15 +28,20 @@ import okhttp3.Headers;
 import okhttp3.Response;
 
 public class SearchActivity extends AppCompatActivity {
-
     private Button search_recipe_button;
     private EditText search_recipe_edit_text;
     private ListView result;
-
-    private List<Recipe> result_list = new ArrayList<Recipe>();
-
     public ImgListAdapter adapter;
     public ProgressDialog dialog;
+
+    private String keyword = "findByIngredients";
+    private int ranking = 2;
+    private int number = 20;
+    private boolean fillIngredients = true;
+    private boolean limitLicense = false;
+
+
+    private List<Recipe> result_list = new ArrayList<Recipe>();
 
     //handle the response after http request
     BaseHttpRequestCallback mCallback = new BaseHttpRequestCallback(){
@@ -45,16 +53,20 @@ public class SearchActivity extends AppCompatActivity {
             //clear the result from the last search
             result_list.clear();
 
-            //add the recipes to the top
+            //add the recipes to the top, fix API count bug
             for (Recipe recipe: recipes) {
-                if(recipe.getMissedIngredientCount() != 0){
+                int count = recipe.getMissedIngredients().size();
+                if(count == 0){
+                    recipe.setMissedIngredientCount(count);
                     result_list.add(recipe);
                 }
             }
 
-            //add the suggested recipes to the bottom
+            //add the suggested recipes to the bottom, fix API count bug
             for (Recipe recipe: recipes) {
-                if(recipe.getMissedIngredientCount() == 0){
+                int count = recipe.getMissedIngredients().size();
+                if(count != 0){
+                    recipe.setMissedIngredientCount(count);
                     result_list.add(recipe);
                 }
             }
@@ -73,12 +85,16 @@ public class SearchActivity extends AppCompatActivity {
             //loading dialog dismiss
             dialog.dismiss();
 
-            /*
-            suggest = (ListView) findViewById(R.id.recipe_suggest);
-            adapter = new ImgListAdapter(SearchActivity.this, CONTENT_SEARCH_SUGGEST);
-            adapter.setDataSource(suggest_list);
-            suggest.setAdapter(adapter);
-            */
+            //set item click event: go to the detail activity
+            result.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                    int recipeId = result_list.get(position).getId();
+                    Intent i = RecipeDetailActivity.newIntent(SearchActivity.this, recipeId);
+                    startActivity(i);
+                }
+            });
+
         }
     };
 
@@ -114,8 +130,9 @@ public class SearchActivity extends AppCompatActivity {
                 String input = search_recipe_edit_text.getEditableText().toString();
 
                 String[] ingredients = input.split(",");
-                String url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=true&limitLicense=false&number=20&ranking=1&ingredients=";
-                //concat the url
+                String url = FFTConstant.API_BASE_URL + keyword + "?fillIngredients=" + fillIngredients
+                        + "&limitLicense=" + limitLicense + "&number=" + number + "&ranking=" + ranking + "&ingredients=";
+                //add ingredients' name to concat the url
                 for(String ingredient : ingredients) {
                     url = url + ingredient.trim() + ",";
                 }

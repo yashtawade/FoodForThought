@@ -28,7 +28,7 @@
             android:layout_weight="1"
             android:layout_alignParentTop="true"
             android:id="@+id/search_recipe_edit_text"
-            android:hint="Missing ingrediant" />
+            android:hint="Type ingredients here..." />
 
         <Button
             android:id="@+id/search_recipe_button"

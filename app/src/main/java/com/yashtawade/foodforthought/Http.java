@@ -1,8 +1,5 @@
 package com.yashtawade.foodforthought;
 
-/**
- * Created by yashtawade on 10/5/16.
- */
 import android.util.Log;
 
 import java.io.BufferedReader;

@@ -69,69 +69,28 @@ public class ImgListAdapter extends BaseAdapter
             viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(mContext).inflate(R.layout.content_search_result, parent, false);
 
-            viewHolder.mImageView = (ImageView)convertView.findViewById(R.id.recipe_result_item_img);
-            viewHolder.mtextName = (TextView)convertView.findViewById(R.id.recipe_result_item_text);
-            viewHolder.suggest = (TextView)convertView.findViewById(R.id.suggest);
+            viewHolder.recipeImage = (ImageView)convertView.findViewById(R.id.recipe_result_item_img);
+            viewHolder.recipeName = (TextView)convertView.findViewById(R.id.recipe_result_item_text);
+            viewHolder.mSuggest = (TextView)convertView.findViewById(R.id.suggest);
             convertView.setTag(viewHolder);
-//            viewHolder.textInfo = (TextView)convertView.findViewById(R.id.item_info);
-//            viewHolder.subscribe = (TextView)convertView.findViewById(R.id.item_un_subscribe);
-
         }
         else
         {
             viewHolder = (ViewHolder)convertView.getTag();
         }
 
-        if(position < 14){
-            viewHolder.suggest.setVisibility(View.INVISIBLE);
-            viewHolder.mtextName.setText((CharSequence)dataList.get(position).getTitle());
+        if(dataList.get(position).getMissedIngredientCount() == 0){
+            viewHolder.mSuggest.setVisibility(View.INVISIBLE);
+            viewHolder.recipeName.setText((CharSequence)dataList.get(position).getTitle());
         }else{
-            viewHolder.suggest.setVisibility(View.VISIBLE);
-            viewHolder.mtextName.setText((CharSequence)dataList.get(position).getTitle());
+            viewHolder.mSuggest.setVisibility(View.VISIBLE);
+            viewHolder.recipeName.setText((CharSequence)dataList.get(position).getTitle());
         }
 
-        Picasso.with(mContext).load(dataList.get(position).getImage()).into(viewHolder.mImageView);
-
-//        //listener
-//        viewHolder.subscribe.setOnClickListener(new MyListener(position));
-
-//        if ((boolean)dataList.get(position).get(MainActivity.KEY[3]))
-//        {
-//            viewHolder.subscribe.setText("cancel");
-//        }
-//        else
-//        {
-//            viewHolder.subscribe.setText("subscribe");
-//        }
+        Picasso.with(mContext).load(dataList.get(position).getImage()).into(viewHolder.recipeImage);
 
         return convertView;
     }
-
-//    /**
-//     * implement listener
-//     */
-//    private class MyListener implements OnClickListener
-//    {
-//        int mPosition;
-//
-//        public MyListener(int inPosition)
-//        {
-//            mPosition = inPosition;
-//        }
-//
-//        @Override
-//        public void onClick(View v)
-//        {
-//            //in case of disorder
-//            if(v.getId() == viewHolder.subscribe.getId())
-//            {
-//                //status change
-//                dataList.get(mPosition).put(MainActivity.KEY[3], !((boolean)dataList.get(mPosition).get(MainActivity.KEY[3])));
-//                MyListAdapter.this.notifyDataSetChanged();
-//            }
-//        }
-//
-//    }
 
 
     /**
@@ -142,24 +101,18 @@ public class ImgListAdapter extends BaseAdapter
         /**
          * recipe image
          */
-        private ImageView mImageView;
+        private ImageView recipeImage;
 
         /**
          * recipe name
          */
-        private TextView mtextName;
+        private TextView recipeName;
 
-        private TextView suggest;
+        /**
+         * recipe mSuggest icon
+         */
+        private TextView mSuggest;
 
-//        /**
-//         * information
-//         */
-//        private TextView textInfo;
-//
-//        /**
-//         * subscribe
-//         */
-//        private TextView subscribe;
     }
 
 }
