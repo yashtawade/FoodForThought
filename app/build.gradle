@@ -5,8 +5,8 @@ android {
     buildToolsVersion "22"
     defaultConfig {
         applicationId "com.yashtawade.foodforthought"
-        minSdkVersion 15
-        targetSdkVersion 21
+        minSdkVersion 22
+        targetSdkVersion 24
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
