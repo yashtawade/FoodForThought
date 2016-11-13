@@ -2,6 +2,7 @@ package com.yashtawade.foodforthought.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.google.android.gms.plus.PlusShare;
 import com.yashtawade.foodforthought.Http;
 import com.yashtawade.foodforthought.R;
 import com.yashtawade.foodforthought.adapters.DetailListAdapter;
@@ -48,6 +50,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private boolean stepBreakdown = false;
 
 
+    private Context context;
     private boolean getIngredients, getSteps;
     List<String> instructionContent;
 
@@ -140,6 +143,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
 
+        context = this;
+
         mRecyclerView = (RecyclerView) findViewById(R.id.list_detail);
 
         recipeId = getIntent().getIntExtra(EXTRA_RECIPE_ID, 0);
@@ -171,14 +176,30 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 item.setImageResource(R.drawable.googleplusbut);
 
             final int position = i;
-            shareBut.addItem(item, new View.OnClickListener() {
+            shareBut.addItem(item, new View.OnClickListener()
+            {
 
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v)
+                {
+                    Intent intent;
+                    if(position == 0)
+                    {
+                        // facebook
 
 
-                    Toast.makeText(RecipeDetailActivity.this, "position:" + position, Toast.LENGTH_SHORT).show();
+                    }else{
+                        // google+
+                        intent = new PlusShare.Builder(context)
+                                .setType("text/plain")
+                                .setText("Welcome to the Google+ platform.")
+                                .setContentUrl(Uri.parse("https://developers.google.com/+/"))
+                                .getIntent();
+                        startActivityForResult(intent, 0);
+                    }
+
                 }
+
             });// Add a menu item
         }
     }
