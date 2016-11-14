@@ -39,7 +39,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
 
-    private static final String EXTRA_RECIPE_ID = "fft.recipe_id";
+    private static final String EXTRA_RECIPE_ID = "fft_recipe_id";
     private int recipeId;
     private Recipe recipe;
 
@@ -63,21 +63,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
             recipe = JSON.parseObject(response, Recipe.class);
             getIngredients = true;
             setList();
-
-//            mRecipeImage = (ImageView) findViewById(R.id.recipe_detail_image);
-//            Picasso.with(RecipeDetailActivity.this).load(recipe.getImage()).into(mRecipeImage);
-//            mRecipeTitle = (TextView) findViewById(R.id.recipe_detail_title);
-//            mRecipeTitle.setText(recipe.getTitle());
-//
-//            if(mIngredientListAdapter == null){
-//                mIngredients = (ListView) findViewById(R.id.recipe_detail_ingredients);
-//                DetailListAdapter adapter = new DetailListAdapter(RecipeDetailActivity.this);
-//                adapter.setDataSource(ingredients);
-//                mIngredients.setAdapter(adapter);
-//            }else{
-//                mIngredientListAdapter.setDataSource(ingredients);
-//                mIngredientListAdapter.notifyDataSetChanged();
-//            }
         }
     };
 
@@ -101,22 +86,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
             getSteps = true;
             setList();
-
-//            if(mStepListAdapter == null){
-//                mRecipeSteps = (ListView) findViewById(R.id.recipe_detail_steps);
-//                StepListAdapter adapter = new StepListAdapter(RecipeDetailActivity.this);
-//                adapter.setDataSource(instructionContent);
-//                mRecipeSteps.setAdapter(adapter);
-//            }else{
-//                mStepListAdapter.setDataSource(instructionContent);
-//                mStepListAdapter.notifyDataSetChanged();
-//            }
-
-//            Instruction instruction = new Instruction();
-//            instruction.setInstructionSteps(instructionSteps);
-//            recipe.setInstruction(instruction);
-//
-//            Log.d("instructions", recipe.getInstructionContent().toString());
         }
     };
 

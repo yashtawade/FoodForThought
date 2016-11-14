@@ -29,8 +29,8 @@ public class Http {
         HttpRequest.get(url,callback);
     }
 
-    public void post(String url, BaseHttpRequestCallback callback){
-        HttpRequest.post(url,callback);
+    public void post(String url, RequestParams params, BaseHttpRequestCallback callback){
+        HttpRequest.post(url, params, callback);
     }
 
     public String read(String httpUrl) throws IOException {

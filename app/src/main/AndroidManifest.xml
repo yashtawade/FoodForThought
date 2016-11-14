@@ -69,6 +69,10 @@
 
         <activity android:name=".activities.RecipeDetailActivity">
         </activity>
+        <activity android:name=".activities.CommentListActivity">
+        </activity>
+        <activity android:name=".activities.CommentWriteActivity">
+        </activity>
     </application>
 
 </manifest>
