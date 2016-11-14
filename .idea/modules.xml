@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FoodForThought.iml" filepath="$PROJECT_DIR$/FoodForThought.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FoodForThought-master.iml" filepath="$PROJECT_DIR$/FoodForThought-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
