@@ -55,7 +55,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     List<String> instructionContent;
 
     private ArcMenu shareBut; // xiaolei
-//    private PlusOneButton mPlusOneButton;
+
 
     BaseHttpRequestCallback mCallback1 = new BaseHttpRequestCallback() {
         @Override
@@ -192,8 +192,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
                         // google+
                         intent = new PlusShare.Builder(context)
                                 .setType("text/plain")
-                                .setText("Welcome to the Google+ platform.")
-                                .setContentUrl(Uri.parse("https://developers.google.com/+/"))
+                                .setText(recipe.getTitle())
+                                .setContentUrl(Uri.parse(recipe.getImage()))//"https://developers.google.com/+/"
                                 .getIntent();
                         startActivityForResult(intent, 0);
                     }
