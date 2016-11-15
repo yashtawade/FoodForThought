@@ -2,6 +2,7 @@ package com.yashtawade.foodforthought.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import com.yashtawade.foodforthought.Http;
 import com.yashtawade.foodforthought.R;
 import com.yashtawade.foodforthought.adapters.DetailListAdapter;
 import com.yashtawade.foodforthought.constants.FFTConstant;
+import com.yashtawade.foodforthought.models.DataParse;
 import com.yashtawade.foodforthought.models.InstructionStep;
 import com.yashtawade.foodforthought.models.Recipe;
 import com.yashtawade.foodforthought.models.Step;
@@ -31,6 +33,7 @@ import okhttp3.Response;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -51,12 +54,19 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
 
     private Context context;
-    private boolean getIngredients, getSteps;
+    private boolean getIngredients, getSteps, getCount, getLiked;
     List<String> instructionContent;
+
+    //todo: get uid from cookie
+    private int uid = 1;
+
+    int count;
+    boolean isLiked;
 
     private ArcMenu shareBut; // xiaolei
 //    private PlusOneButton mPlusOneButton;
 
+    //recipe information callback
     BaseHttpRequestCallback mCallback1 = new BaseHttpRequestCallback() {
         @Override
         public void onResponse(Response httpResponse, String response, Headers headers) {
@@ -66,6 +76,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
     };
 
+    //recipe instruction callback
     BaseHttpRequestCallback mCallback2 = new BaseHttpRequestCallback() {
         @Override
         public void onResponse(Response httpResponse, String response, Headers headers) {
@@ -89,15 +100,46 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
     };
 
+    //recipe like number callback
+    BaseHttpRequestCallback mCallback3 = new BaseHttpRequestCallback(){
+        @Override
+        public void onResponse(Response httpResponse, String response, Headers headers) {
+            DataParse dp = JSON.parseObject(response, DataParse.class);
+            if(dp.getError() == 0){
+                count = Integer.valueOf(dp.getData());
+            }
+
+            getCount = true;
+            setList();
+        }
+    };
+
+    //recipe like info callback
+    BaseHttpRequestCallback mCallback4 = new BaseHttpRequestCallback(){
+        @Override
+        public void onResponse(Response httpResponse, String response, Headers headers) {
+            DataParse dp = JSON.parseObject(response, DataParse.class);
+            if(dp.getError() == 0){
+                if(Integer.valueOf(dp.getData()) == 1){
+                    isLiked = true;
+                }
+            }
+
+            getLiked = true;
+            setList();
+        }
+    };
+
     public void setList() {
-        if (getSteps && getIngredients) {
+        if (getSteps && getIngredients && getCount && getLiked) {
 
             final LinearLayoutManager layoutManager = new LinearLayoutManager(RecipeDetailActivity.this);
             mRecyclerView.setLayoutManager(layoutManager);
             mRecyclerView.setHasFixedSize(true);
 
-            DetailListAdapter adapter = new DetailListAdapter(this, recipe, instructionContent);
+            DetailListAdapter adapter = new DetailListAdapter(this, recipe, instructionContent, count, isLiked);
             mRecyclerView.setAdapter(adapter);
+
         }
     }
 
@@ -123,6 +165,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
         String url1 = FFTConstant.API_BASE_URL + recipeId + "/" + keyWord1 + "?includeNutrition=" + includeNutrition;
         String url2 = FFTConstant.API_BASE_URL + recipeId + "/" + keyWord2 + "?stepBreakdown=" + stepBreakdown;
+        String url3 = FFTConstant.LONG_BASE_URL + "recipe/like/count?rid=" + recipeId;
+        String url4 = FFTConstant.LONG_BASE_URL + "recipe/like/get?rid=" + recipeId + "&uid=" + uid;
 
         getIngredients = false;
         getSteps = false;
@@ -130,6 +174,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
         Http httpRequest = new Http();
         httpRequest.get(url1, mCallback1);
         httpRequest.get(url2, mCallback2);
+        httpRequest.get(url3, mCallback3);
+        httpRequest.get(url4, mCallback4);
 
         // xiaolei
         shareBut = (ArcMenu) findViewById(R.id.sharebtn);

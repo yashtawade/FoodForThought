@@ -11,9 +11,7 @@ import android.widget.EditText;
 import com.alibaba.fastjson.JSON;
 import com.yashtawade.foodforthought.Http;
 import com.yashtawade.foodforthought.R;
-import com.yashtawade.foodforthought.adapters.CommentListAdapter;
 import com.yashtawade.foodforthought.constants.FFTConstant;
-import com.yashtawade.foodforthought.models.Comment;
 import com.yashtawade.foodforthought.models.DataParse;
 
 import cn.finalteam.okhttpfinal.BaseHttpRequestCallback;
@@ -53,7 +51,7 @@ public class CommentWriteActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int rid = getIntent().getIntExtra(EXTRA_RECIPE_ID, 0);
                 String comment = comment_edit_text.getText().toString();
-                String url = FFTConstant.APP_BASE_URL + keyword;
+                String url = FFTConstant.LONG_BASE_URL + keyword;
                 RequestParams params = new RequestParams();
                 params.addFormDataPart("rid", rid);
                 params.addFormDataPart("uid", uid);

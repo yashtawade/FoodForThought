@@ -104,7 +104,7 @@ public class CommentListActivity extends AppCompatActivity implements SwipeRefre
      */
     private void initData() {
         int recipeId = getIntent().getIntExtra(EXTRA_RECIPE_ID, 0);
-        String url = FFTConstant.APP_BASE_URL + keyword + "?rid=" + recipeId;
+        String url = FFTConstant.LONG_BASE_URL + keyword + "?rid=" + recipeId;
         Http httpRequest = new Http();
         httpRequest.get(url, mCallback1);
     }
@@ -153,7 +153,7 @@ public class CommentListActivity extends AppCompatActivity implements SwipeRefre
 
     private void setRefreshData() {
         int recipeId = getIntent().getIntExtra(EXTRA_RECIPE_ID, 0);
-        String url = FFTConstant.APP_BASE_URL + keyword + "?rid=" + recipeId;
+        String url = FFTConstant.LONG_BASE_URL + keyword + "?rid=" + recipeId;
         Http httpRequest = new Http();
         httpRequest.get(url, mCallback1);
     }
@@ -179,7 +179,7 @@ public class CommentListActivity extends AppCompatActivity implements SwipeRefre
 
     private void setLoadingMoreData(){
         int recipeId = getIntent().getIntExtra(EXTRA_RECIPE_ID, 0);
-        String url = FFTConstant.APP_BASE_URL + keyword + "?rid=" + recipeId + "&lastCommentTime=" + lastCommentTime;
+        String url = FFTConstant.LONG_BASE_URL + keyword + "?rid=" + recipeId + "&lastCommentTime=" + lastCommentTime;
         Http httpRequest = new Http();
         httpRequest.get(url, mCallback2);
     }

@@ -10,12 +10,37 @@
         android:layout_width="match_parent"
         android:layout_height="240dp"/>
 
-    <TextView
-        android:id="@+id/title"
-        android:textSize="20sp"
-        android:textStyle="bold"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <ImageButton
+            android:id="@+id/like_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/like_number_text_view"
+            android:background="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_action_like_normal"/>
+
+        <TextView
+            android:id="@+id/like_number_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="16dp"
+            android:textSize="16sp"
+            android:text="0"/>
+    </RelativeLayout>
+
 
 
     <TextView
