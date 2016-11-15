@@ -211,6 +211,7 @@ public class ArcLayout extends ViewGroup {
         final int toXDelta = frame.left - child.getLeft();
         final int toYDelta = frame.top - child.getTop();
 
+
         Interpolator interpolator = mExpanded ? new AccelerateInterpolator() : new OvershootInterpolator(1.5f);
         final long startOffset = computeStartOffset(childCount, mExpanded, index, 0.1f, duration, interpolator);
 

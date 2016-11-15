@@ -1,5 +1,6 @@
 package com.yashtawade.foodforthought.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -11,6 +12,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.facebook.share.ShareApi;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.plus.PlusShare;
 import com.yashtawade.foodforthought.Http;
 import com.yashtawade.foodforthought.R;
@@ -134,7 +138,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
         // xiaolei
         shareBut = (ArcMenu) findViewById(R.id.sharebtn);
 
-
         final int itemCount = 2;
         for (int i = 0; i < itemCount; i++) {
             ImageView item = new ImageView(this);
@@ -155,7 +158,19 @@ public class RecipeDetailActivity extends AppCompatActivity {
                     if(position == 0)
                     {
                         // facebook
-
+//                        ShareLinkContent content = new ShareLinkContent.Builder()
+//                                .setContentUrl(Uri.parse("https://www.fackbook.com"))
+//                                .setContentTitle(recipe.getTitle())
+//                                .setImageUrl(Uri.parse(recipe.getImage()))
+//                                .build();
+//                        ShareApi.share(content, null);
+                        ShareLinkContent content = new ShareLinkContent.Builder()
+                                .setContentUrl(Uri.parse("https://developers.facebook.com"))
+                                .setContentTitle(recipe.getTitle())
+                                .setImageUrl(Uri.parse(recipe.getImage()))
+                                .build();
+                        ShareDialog shareDialog = new ShareDialog((Activity) context);
+                        shareDialog.show(content);
 
                     }else{
                         // google+

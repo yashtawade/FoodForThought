@@ -2,6 +2,9 @@ package com.yashtawade.foodforthought;
 
 import android.app.Application;
 
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+
 import cn.finalteam.okhttpfinal.OkHttpFinal;
 import cn.finalteam.okhttpfinal.OkHttpFinalConfiguration;
 import okhttp3.Headers;
@@ -19,5 +22,8 @@ public class MyApplication extends Application{
         builder.setCommenHeaders(commonHeaders);
 
         OkHttpFinal.getInstance().init(builder.build());
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
     }
 }

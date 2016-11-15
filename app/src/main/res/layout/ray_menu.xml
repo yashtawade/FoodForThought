@@ -7,13 +7,13 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        custom:childSize="80px"
+        custom:childSize="60px"
         custom:leftHolderWidth="60dp" />
 
     <FrameLayout
         android:id="@+id/control_layout"
-        android:layout_width="82dp"
-        android:layout_height="82dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_centerVertical="true"
         android:layout_margin="4dp"
         android:background="@drawable/composer_button" >

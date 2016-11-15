@@ -7,21 +7,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        custom:childSize="80px"
-        custom:fromDegrees="0.0"
-        custom:toDegrees="460.0" />
+        custom:childSize="32dp"/>
 
     <FrameLayout
         android:id="@+id/control_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_centerInParent="true"
         android:background="@drawable/composer_button" >
 
         <ImageView
             android:id="@+id/control_hint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="center"
             android:duplicateParentState="true"
             android:src="@drawable/composer_icn_plus" />
