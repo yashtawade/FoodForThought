@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/button_write_comment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:textAllCaps="false"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/shape_button_general"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:text="Write Comment"/>
+
+    <Button
+        android:id="@+id/button_view_comment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:textAllCaps="false"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/shape_button_general"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:text="View Comment"/>
+
+</LinearLayout>

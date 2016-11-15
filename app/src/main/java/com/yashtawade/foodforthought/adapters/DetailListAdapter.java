@@ -1,16 +1,20 @@
 package com.yashtawade.foodforthought.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.yashtawade.foodforthought.R;
+import com.yashtawade.foodforthought.activities.CommentListActivity;
+import com.yashtawade.foodforthought.activities.CommentWriteActivity;
 import com.yashtawade.foodforthought.models.Recipe;
 
 import java.util.List;
@@ -20,6 +24,7 @@ public class DetailListAdapter extends RecyclerView.Adapter{
     public final static int ingredientItemType = 2;
     public final static int instructionHeadType = 3;
     public final static int instructionItemType = 4;
+    public final static int commentButtonType = 5;
 
 
     private Recipe recipe;
@@ -39,7 +44,7 @@ public class DetailListAdapter extends RecyclerView.Adapter{
     @Override
     public int getItemCount()
     {
-        int count = recipe.getExtendedIngredients().size() + instructionList.size() + 2;
+        int count = recipe.getExtendedIngredients().size() + instructionList.size() + 3;
         return count;
     }
 
@@ -59,7 +64,11 @@ public class DetailListAdapter extends RecyclerView.Adapter{
             return instructionHeadType;
         }
 
-        return instructionItemType;
+        if(position <= recipe.getExtendedIngredients().size() + instructionList.size() + 1){
+            return instructionItemType;
+        }
+
+        return commentButtonType;
     }
 
     @Override
@@ -81,10 +90,14 @@ public class DetailListAdapter extends RecyclerView.Adapter{
                 view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list_instruction_head,null);
                 view.setLayoutParams(lp);
                 return new InstructionHeadViewHolder(view);
-            default:
+            case instructionItemType:
                 view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list_instruction,null);
                 view.setLayoutParams(lp);
                 return new InstructionItemViewHolder(view);
+            default:
+                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list_comment_buttons,null);
+                view.setLayoutParams(lp);
+                return new CommentButtonsItemViewHolder(view);
         }
 
     }
@@ -113,6 +126,25 @@ public class DetailListAdapter extends RecyclerView.Adapter{
             ((InstructionItemViewHolder) viewHolder).step.setText(
                     instructionList.get(position)
             );
+        }
+
+        if(viewHolder instanceof CommentButtonsItemViewHolder){
+
+            ((CommentButtonsItemViewHolder) viewHolder).write_comment.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    Intent i = CommentWriteActivity.newIntent(mContext, recipe.getId());
+                    mContext.startActivity(i);
+                }
+            });
+
+            ((CommentButtonsItemViewHolder) viewHolder).view_comment.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    Intent i = CommentListActivity.newIntent(mContext, recipe.getId());
+                    mContext.startActivity(i);
+                }
+            });
         }
     }
 
@@ -158,7 +190,7 @@ public class DetailListAdapter extends RecyclerView.Adapter{
     class InstructionItemViewHolder extends RecyclerView.ViewHolder
     {
         /**
-         * ingredient name
+         * instruction content
          */
          TextView step;
 
@@ -166,6 +198,20 @@ public class DetailListAdapter extends RecyclerView.Adapter{
             super(view);
 
             step = (TextView) view.findViewById(R.id.step_content);
+        }
+    }
+
+    class CommentButtonsItemViewHolder extends RecyclerView.ViewHolder{
+
+        Button write_comment;
+        Button view_comment;
+
+        public CommentButtonsItemViewHolder(View view) {
+            super(view);
+
+            write_comment = (Button) view.findViewById(R.id.button_write_comment);
+            view_comment = (Button) view.findViewById(R.id.button_view_comment);
+
         }
     }
 
