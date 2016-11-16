@@ -2,22 +2,34 @@ package com.yashtawade.foodforthought.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.squareup.picasso.Picasso;
+import com.yashtawade.foodforthought.Http;
 import com.yashtawade.foodforthought.R;
 import com.yashtawade.foodforthought.activities.CommentListActivity;
 import com.yashtawade.foodforthought.activities.CommentWriteActivity;
+import com.yashtawade.foodforthought.constants.FFTConstant;
+import com.yashtawade.foodforthought.models.DataParse;
 import com.yashtawade.foodforthought.models.Recipe;
 
 import java.util.List;
+
+import cn.finalteam.okhttpfinal.BaseHttpRequestCallback;
+import cn.finalteam.okhttpfinal.RequestParams;
+import okhttp3.Headers;
+import okhttp3.Response;
 
 public class DetailListAdapter extends RecyclerView.Adapter{
     public final static int ingredientHeadType = 1;
@@ -26,19 +38,23 @@ public class DetailListAdapter extends RecyclerView.Adapter{
     public final static int instructionItemType = 4;
     public final static int commentButtonType = 5;
 
+    //todo: get uid from cookie
+    private int uid = 1;
 
     private Recipe recipe;
     private List<String> instructionList;
-
+    public int countLike;
+    public boolean isLiked;
     private Context mContext;
 
-    public DetailListAdapter(Context mContext, Recipe recipe, List<String> instructionList)
+    public DetailListAdapter(Context mContext, Recipe recipe, List<String> instructionList, int countLike, boolean isLiked)
     {
         super();
         this.mContext = mContext;
         this.recipe = recipe;
         this.instructionList=instructionList;
-
+        this.countLike = countLike;
+        this.isLiked = isLiked;
     }
 
     @Override
@@ -81,7 +97,7 @@ public class DetailListAdapter extends RecyclerView.Adapter{
             case ingredientHeadType:
                 view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list_ingredient_head,null);
                 view.setLayoutParams(lp);
-                return new IngregientHeadViewHolder(view);
+                return new IngredientHeadViewHolder(view);
             case ingredientItemType:
                 view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list_ingredient,null);
                 view.setLayoutParams(lp);
@@ -102,12 +118,52 @@ public class DetailListAdapter extends RecyclerView.Adapter{
 
     }
 
-
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position){
-        if(viewHolder instanceof IngregientHeadViewHolder){
-            Picasso.with(mContext).load(recipe.getImage()).into(((IngregientHeadViewHolder) viewHolder).imageView);
-            ((IngregientHeadViewHolder) viewHolder).title.setText(recipe.getTitle());
+    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int position){
+
+        if(viewHolder instanceof IngredientHeadViewHolder){
+            Picasso.with(mContext).load(recipe.getImage()).into(((IngredientHeadViewHolder) viewHolder).imageView);
+            ((IngredientHeadViewHolder) viewHolder).title.setText(recipe.getTitle());
+            if(countLike != 0){
+                ((IngredientHeadViewHolder) viewHolder).likeNumberView.setText(countLike + "");
+            }
+
+            if(isLiked){
+                ((IngredientHeadViewHolder) viewHolder).likeButton.setColorFilter(Color.parseColor("#D91517"));
+            }else{
+                ((IngredientHeadViewHolder) viewHolder).likeButton.setColorFilter(Color.parseColor("#3b5998"));
+            }
+
+            ((IngredientHeadViewHolder) viewHolder).likeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    BaseHttpRequestCallback mCallback = new BaseHttpRequestCallback(){
+                        @Override
+                        public void onResponse(Response httpResponse, String response, Headers headers) {
+                            DataParse dp = JSON.parseObject(response, DataParse.class);
+                            if(dp.getError() == 0){
+                                if(isLiked){
+                                    ((IngredientHeadViewHolder) viewHolder).likeButton.setColorFilter(Color.parseColor("#3b5998"));
+                                    ((IngredientHeadViewHolder) viewHolder).likeNumberView.setText(--countLike + "");
+                                    isLiked = false;
+                                }else{
+                                    ((IngredientHeadViewHolder) viewHolder).likeButton.setColorFilter(Color.parseColor("#D91517"));
+                                    ((IngredientHeadViewHolder) viewHolder).likeNumberView.setText(++countLike + "");
+                                    isLiked = true;
+                                }
+                            }
+                        }
+                    };
+
+                    String url = FFTConstant.LONG_BASE_URL + "recipe/like/toggle";
+                    RequestParams params = new RequestParams();
+                    params.addFormDataPart("rid", recipe.getId());
+                    params.addFormDataPart("uid", uid);
+                    Http httpRequest = new Http();
+                    httpRequest.post(url, params, mCallback);
+
+                }
+            });
         }
 
         if(viewHolder instanceof IngredientItemViewHolder){
@@ -146,22 +202,27 @@ public class DetailListAdapter extends RecyclerView.Adapter{
                 }
             });
         }
+
     }
 
 
     /**
      *layout helper
      */
-    class IngregientHeadViewHolder extends RecyclerView.ViewHolder
+    class IngredientHeadViewHolder extends RecyclerView.ViewHolder
     {
-         ImageView imageView;
-         TextView title;
+        ImageView imageView;
+        TextView title;
+        ImageButton likeButton;
+        TextView likeNumberView;
 
-        public IngregientHeadViewHolder(View view){
+        public IngredientHeadViewHolder(View view){
             super(view);
 
             imageView = (ImageView) view.findViewById(R.id.imageView);
             title = (TextView) view.findViewById(R.id.title);
+            likeButton = (ImageButton) view.findViewById(R.id.like_button);
+            likeNumberView = (TextView) view.findViewById(R.id.like_number_text_view);
         }
     }
 
