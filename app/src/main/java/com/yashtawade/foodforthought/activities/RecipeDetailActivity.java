@@ -62,7 +62,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     List<String> instructionContent;
 
     //todo: get uid from cookie
-    private int uid = 1;
+    private int uid = 3;
 
     int count;
     boolean isLiked;
@@ -92,6 +92,10 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 for (Step step : instep.getSteps()) {
                     for (String s : step.getStep().split("\\.")) {
                         String each = s.trim();
+                        if(each.startsWith("(") || each.startsWith(")")){
+                            each = each.substring(1, each.length());
+                        }
+
                         if (each.length() > 10) {
                             instructionContent.add(i++ + ". " + each);
                         }

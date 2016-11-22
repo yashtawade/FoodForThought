@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.yashtawade.foodforthought.constants.FFTConstant;
 
 import cn.finalteam.okhttpfinal.OkHttpFinal;
 import cn.finalteam.okhttpfinal.OkHttpFinalConfiguration;
@@ -18,7 +19,7 @@ public class MyApplication extends Application{
         OkHttpFinalConfiguration.Builder builder =
                 new OkHttpFinalConfiguration.Builder();
         //standard http request header
-        Headers commonHeaders = new Headers.Builder().add("X-Mashape-Key:eSTTv3Urw2mshZJrgoQZoKJbwtmDp1AE9gajsnm5CFL4X5DDw6").build();
+        Headers commonHeaders = new Headers.Builder().add(FFTConstant.API_KEY).build();
         builder.setCommenHeaders(commonHeaders);
 
         OkHttpFinal.getInstance().init(builder.build());

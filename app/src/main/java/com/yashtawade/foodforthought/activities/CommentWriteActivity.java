@@ -24,7 +24,7 @@ public class CommentWriteActivity extends AppCompatActivity {
     private static final String EXTRA_RECIPE_ID = "fft_recipe_id";
 
     //todo: get uid from cookie
-    private int uid = 1;
+    private int uid = 3;
 
     BaseHttpRequestCallback mCallback = new BaseHttpRequestCallback(){
 

@@ -20,8 +20,11 @@ import com.yashtawade.foodforthought.Http;
 import com.yashtawade.foodforthought.R;
 import com.yashtawade.foodforthought.activities.CommentListActivity;
 import com.yashtawade.foodforthought.activities.CommentWriteActivity;
+import com.yashtawade.foodforthought.activities.NutritionActivity;
 import com.yashtawade.foodforthought.constants.FFTConstant;
 import com.yashtawade.foodforthought.models.DataParse;
+import com.yashtawade.foodforthought.models.Ingredient;
+import com.yashtawade.foodforthought.models.Instruction;
 import com.yashtawade.foodforthought.models.Recipe;
 
 import java.util.List;
@@ -39,7 +42,7 @@ public class DetailListAdapter extends RecyclerView.Adapter{
     public final static int commentButtonType = 5;
 
     //todo: get uid from cookie
-    private int uid = 1;
+    private int uid = 3;
 
     private Recipe recipe;
     private List<String> instructionList;
@@ -176,6 +179,23 @@ public class DetailListAdapter extends RecyclerView.Adapter{
 
         }
 
+        if(viewHolder instanceof InstructionHeadViewHolder){
+            ((InstructionHeadViewHolder) viewHolder).nutritionDetail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //concat ingredient to make the request
+                    String ingredientList = "";
+                    for(Ingredient ingredient : recipe.getExtendedIngredients()){
+                        ingredientList += ingredient.getAmount() + " " + ingredient.getUnit() + " " + ingredient.getName() + "\\n";
+                    }
+                    ingredientList = ingredientList.substring(0, ingredientList.length() - 2);
+
+                    Intent i = NutritionActivity.newIntent(mContext, ingredientList);
+                    mContext.startActivity(i);
+                }
+            });
+        }
+
         if(viewHolder instanceof InstructionItemViewHolder){
             position = position - 2 - recipe.getExtendedIngredients().size();
 
@@ -243,8 +263,15 @@ public class DetailListAdapter extends RecyclerView.Adapter{
 
     class InstructionHeadViewHolder extends RecyclerView.ViewHolder
     {
+        /**
+         * click to show nutrition detail
+         */
+        Button nutritionDetail;
+
         public InstructionHeadViewHolder(View view) {
             super(view);
+
+            nutritionDetail = (Button) view.findViewById(R.id.btn_nutrition_detail);
         }
     }
 

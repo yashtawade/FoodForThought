@@ -14,8 +14,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
-
-
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -62,10 +60,9 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>
-
-       <meta-data
-             android:name="com.google.android.gms.version"
-             android:value="@integer/google_play_services_version"/>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
@@ -75,6 +72,8 @@
         <activity android:name=".activities.CommentListActivity">
         </activity>
         <activity android:name=".activities.CommentWriteActivity">
+        </activity>
+        <activity android:name=".activities.NutritionActivity">
         </activity>
     </application>
 
