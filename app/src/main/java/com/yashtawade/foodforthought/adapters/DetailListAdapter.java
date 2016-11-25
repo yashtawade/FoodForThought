@@ -41,7 +41,6 @@ public class DetailListAdapter extends RecyclerView.Adapter{
     public final static int instructionItemType = 4;
     public final static int commentButtonType = 5;
 
-    //todo: get uid from cookie
     private int uid = 3;
 
     private Recipe recipe;
@@ -50,7 +49,7 @@ public class DetailListAdapter extends RecyclerView.Adapter{
     public boolean isLiked;
     private Context mContext;
 
-    public DetailListAdapter(Context mContext, Recipe recipe, List<String> instructionList, int countLike, boolean isLiked)
+    public DetailListAdapter(Context mContext, Recipe recipe, List<String> instructionList, int countLike, boolean isLiked, int uid)
     {
         super();
         this.mContext = mContext;
@@ -58,6 +57,7 @@ public class DetailListAdapter extends RecyclerView.Adapter{
         this.instructionList=instructionList;
         this.countLike = countLike;
         this.isLiked = isLiked;
+        this.uid = uid;
     }
 
     @Override

@@ -9,4 +9,5 @@
     <color name="forthColor">#00FFFF</color>
     <color name="white">#ffffff</color>
     <color name="facebookBlue">#3b5998</color>
+    <color name="logout">#ff6666</color>
 </resources>

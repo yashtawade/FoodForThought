@@ -2,6 +2,7 @@ package com.yashtawade.foodforthought.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,8 +24,7 @@ public class CommentWriteActivity extends AppCompatActivity {
     private String keyword = "recipe/comment";
     private static final String EXTRA_RECIPE_ID = "fft_recipe_id";
 
-    //todo: get uid from cookie
-    private int uid = 3;
+    private int uid;
 
     BaseHttpRequestCallback mCallback = new BaseHttpRequestCallback(){
 
@@ -43,6 +43,9 @@ public class CommentWriteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment_write);
+
+        SharedPreferences sp = getSharedPreferences("Login", Context.MODE_PRIVATE);
+        uid = sp.getInt("uid", 0);
 
         final EditText comment_edit_text = (EditText) findViewById(R.id.comment_write_edit_text);
         Button comment_submit_button = (Button) findViewById(R.id.comment_write_submit_button);

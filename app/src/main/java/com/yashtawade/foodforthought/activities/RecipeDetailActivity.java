@@ -3,6 +3,7 @@ package com.yashtawade.foodforthought.activities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
@@ -61,8 +62,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private boolean getIngredients, getSteps, getCount, getLiked;
     List<String> instructionContent;
 
-    //todo: get uid from cookie
-    private int uid = 3;
+    private int uid;
 
     int count;
     boolean isLiked;
@@ -145,7 +145,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
             mRecyclerView.setLayoutManager(layoutManager);
             mRecyclerView.setHasFixedSize(true);
 
-            DetailListAdapter adapter = new DetailListAdapter(this, recipe, instructionContent, count, isLiked);
+            DetailListAdapter adapter = new DetailListAdapter(this, recipe, instructionContent, count, isLiked, uid);
             mRecyclerView.setAdapter(adapter);
 
         }
@@ -163,6 +163,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_detail);
 
         context = this;
+        SharedPreferences sp = getSharedPreferences("Login", Context.MODE_PRIVATE);
+        uid = sp.getInt("uid", 0);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.list_detail);
 

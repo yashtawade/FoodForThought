@@ -29,7 +29,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.RegisterActivity"/>
-        <activity android:name=".Menu"/>
         <activity
             android:name=".activities.NavigationActivity"
             android:label="@string/title_activity_navigation"
@@ -74,6 +73,8 @@
         <activity android:name=".activities.CommentWriteActivity">
         </activity>
         <activity android:name=".activities.NutritionActivity">
+        </activity>
+        <activity android:name=".activities.ProfileActivity">
         </activity>
     </application>
 

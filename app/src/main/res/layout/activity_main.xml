@@ -1,7 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
-
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="fill_parent"
@@ -14,8 +12,6 @@
     android:background="@drawable/a121018819"
     android:alpha="1">
 
-
-
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,6 +19,19 @@
         android:id="@+id/imageView"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:textColorHint="#ffffff"
+        android:textColor = "#ffffff"
+        android:id="@+id/username"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:hint="Email" />
 
     <EditText
         android:layout_width="match_parent"
@@ -37,19 +46,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:hint="Password" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:textColorHint="#ffffff"
-        android:textColor = "#ffffff"
-        android:id="@+id/username"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:hint="Username" />
 
     <Button
         android:text="Sign in "
