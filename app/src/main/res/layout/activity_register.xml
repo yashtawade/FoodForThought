@@ -55,11 +55,11 @@
                         android:layout_height="wrap_content"
                         android:inputType="textPersonName"
                         android:ems="10"
-                        android:id="@+id/name"
+                        android:id="@+id/firstName"
                         android:textColor = "#ffffff"
                         android:textColorHint="#ffffff"
                         android:layout_weight="1"
-                        android:hint="Name" />
+                        android:hint="First Name" />
 
                     <EditText
                         android:layout_width="wrap_content"
@@ -68,9 +68,9 @@
                         android:ems="10"
                         android:textColorHint="#ffffff"
                         android:textColor = "#ffffff"
-                        android:id="@+id/username"
+                        android:id="@+id/lastName"
                         android:layout_weight="1"
-                        android:hint="Username" />
+                        android:hint="Last Name" />
                 </LinearLayout>
 
                 <EditText
@@ -81,7 +81,7 @@
                     android:textColorHint="#ffffff"
                     android:textColor = "#ffffff"
                     android:id="@+id/email"
-                    android:hint="E-mail Address" />
+                    android:hint="Email" />
 
                 <EditText
                     android:layout_width="fill_parent"
@@ -101,13 +101,13 @@
                     <EditText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
+                        android:inputType="textPassword"
                         android:ems="10"
                         android:textColorHint="#ffffff"
                         android:textColor = "#ffffff"
                         android:id="@+id/pass2"
                         android:layout_weight="1"
-                        android:hint="Re-type Password" />
+                        android:hint="Confirm Password" />
                 </LinearLayout>
 
                 <Button
@@ -143,7 +143,7 @@
 
                 <com.google.android.gms.ads.AdView
                     android:layout_width="320dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="50dp"
                     ads:adSize="BANNER"
                     ads:adUnitId="@string/banner_ad_unit_id"
                     android:id="@+id/adView"
