@@ -48,6 +48,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
 
     private static final String EXTRA_RECIPE_ID = "fft_recipe_id";
+    private static final String EXTRA_INPUT_INGREDIENTS = "fft_input_ingredients";
     private int recipeId;
     private Recipe recipe;
 
@@ -60,6 +61,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     private Context context;
     private boolean getIngredients, getSteps, getCount, getLiked;
+    private String[] inputIngredients;
     List<String> instructionContent;
 
     private int uid;
@@ -145,15 +147,16 @@ public class RecipeDetailActivity extends AppCompatActivity {
             mRecyclerView.setLayoutManager(layoutManager);
             mRecyclerView.setHasFixedSize(true);
 
-            DetailListAdapter adapter = new DetailListAdapter(this, recipe, instructionContent, count, isLiked, uid);
+            DetailListAdapter adapter = new DetailListAdapter(this, recipe, instructionContent, count, isLiked, uid, inputIngredients);
             mRecyclerView.setAdapter(adapter);
 
         }
     }
 
-    public static Intent newIntent(Context packageContext, int recipeId) {
+    public static Intent newIntent(Context packageContext, int recipeId, String[] inputIngredients) {
         Intent i = new Intent(packageContext, RecipeDetailActivity.class);
         i.putExtra(EXTRA_RECIPE_ID, recipeId);
+        i.putExtra(EXTRA_INPUT_INGREDIENTS, inputIngredients);
         return i;
     }
 
@@ -168,6 +171,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.list_detail);
 
+        inputIngredients = getIntent().getStringArrayExtra(EXTRA_INPUT_INGREDIENTS);
         recipeId = getIntent().getIntExtra(EXTRA_RECIPE_ID, 0);
         if (recipeId == 0) {
             throw new InvalidParameterException();

@@ -34,7 +34,7 @@ import cn.finalteam.okhttpfinal.RequestParams;
 import okhttp3.Headers;
 import okhttp3.Response;
 
-public class DetailListAdapter extends RecyclerView.Adapter{
+public class DetailListAdapter extends RecyclerView.Adapter {
     public final static int ingredientHeadType = 1;
     public final static int ingredientItemType = 2;
     public final static int instructionHeadType = 3;
@@ -47,43 +47,43 @@ public class DetailListAdapter extends RecyclerView.Adapter{
     private List<String> instructionList;
     public int countLike;
     public boolean isLiked;
+    public String[] inputIngredients;
     private Context mContext;
 
-    public DetailListAdapter(Context mContext, Recipe recipe, List<String> instructionList, int countLike, boolean isLiked, int uid)
-    {
+    public DetailListAdapter(Context mContext, Recipe recipe, List<String> instructionList, int countLike, boolean isLiked, int uid, String[] inputIngredients) {
         super();
         this.mContext = mContext;
         this.recipe = recipe;
-        this.instructionList=instructionList;
+        this.instructionList = instructionList;
         this.countLike = countLike;
         this.isLiked = isLiked;
         this.uid = uid;
+        this.inputIngredients = inputIngredients;
     }
 
     @Override
-    public int getItemCount()
-    {
+    public int getItemCount() {
         int count = recipe.getExtendedIngredients().size() + instructionList.size() + 3;
         return count;
     }
 
 
     @Override
-    public int getItemViewType(int position){
+    public int getItemViewType(int position) {
 
-        if(position == 0){
+        if (position == 0) {
             return ingredientHeadType;
         }
 
-        if(position <= recipe.getExtendedIngredients().size()){
+        if (position <= recipe.getExtendedIngredients().size()) {
             return ingredientItemType;
         }
 
-        if(position == recipe.getExtendedIngredients().size()+1){
+        if (position == recipe.getExtendedIngredients().size() + 1) {
             return instructionHeadType;
         }
 
-        if(position <= recipe.getExtendedIngredients().size() + instructionList.size() + 1){
+        if (position <= recipe.getExtendedIngredients().size() + instructionList.size() + 1) {
             return instructionItemType;
         }
 
@@ -91,30 +91,30 @@ public class DetailListAdapter extends RecyclerView.Adapter{
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int type){
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int type) {
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         View view;
 
-        switch(type){
+        switch (type) {
             case ingredientHeadType:
-                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list_ingredient_head,null);
+                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list_ingredient_head, null);
                 view.setLayoutParams(lp);
                 return new IngredientHeadViewHolder(view);
             case ingredientItemType:
-                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list_ingredient,null);
+                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list_ingredient, null);
                 view.setLayoutParams(lp);
                 return new IngredientItemViewHolder(view);
             case instructionHeadType:
-                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list_instruction_head,null);
+                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list_instruction_head, null);
                 view.setLayoutParams(lp);
                 return new InstructionHeadViewHolder(view);
             case instructionItemType:
-                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list_instruction,null);
+                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list_instruction, null);
                 view.setLayoutParams(lp);
                 return new InstructionItemViewHolder(view);
             default:
-                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list_comment_buttons,null);
+                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list_comment_buttons, null);
                 view.setLayoutParams(lp);
                 return new CommentButtonsItemViewHolder(view);
         }
@@ -122,34 +122,34 @@ public class DetailListAdapter extends RecyclerView.Adapter{
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int position){
+    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int position) {
 
-        if(viewHolder instanceof IngredientHeadViewHolder){
+        if (viewHolder instanceof IngredientHeadViewHolder) {
             Picasso.with(mContext).load(recipe.getImage()).into(((IngredientHeadViewHolder) viewHolder).imageView);
             ((IngredientHeadViewHolder) viewHolder).title.setText(recipe.getTitle());
-            if(countLike != 0){
+            if (countLike != 0) {
                 ((IngredientHeadViewHolder) viewHolder).likeNumberView.setText(countLike + "");
             }
 
-            if(isLiked){
+            if (isLiked) {
                 ((IngredientHeadViewHolder) viewHolder).likeButton.setColorFilter(Color.parseColor("#D91517"));
-            }else{
+            } else {
                 ((IngredientHeadViewHolder) viewHolder).likeButton.setColorFilter(Color.parseColor("#3b5998"));
             }
 
             ((IngredientHeadViewHolder) viewHolder).likeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    BaseHttpRequestCallback mCallback = new BaseHttpRequestCallback(){
+                    BaseHttpRequestCallback mCallback = new BaseHttpRequestCallback() {
                         @Override
                         public void onResponse(Response httpResponse, String response, Headers headers) {
                             DataParse dp = JSON.parseObject(response, DataParse.class);
-                            if(dp.getError() == 0){
-                                if(isLiked){
+                            if (dp.getError() == 0) {
+                                if (isLiked) {
                                     ((IngredientHeadViewHolder) viewHolder).likeButton.setColorFilter(Color.parseColor("#3b5998"));
                                     ((IngredientHeadViewHolder) viewHolder).likeNumberView.setText(--countLike + "");
                                     isLiked = false;
-                                }else{
+                                } else {
                                     ((IngredientHeadViewHolder) viewHolder).likeButton.setColorFilter(Color.parseColor("#D91517"));
                                     ((IngredientHeadViewHolder) viewHolder).likeNumberView.setText(++countLike + "");
                                     isLiked = true;
@@ -169,23 +169,36 @@ public class DetailListAdapter extends RecyclerView.Adapter{
             });
         }
 
-        if(viewHolder instanceof IngredientItemViewHolder){
+        if (viewHolder instanceof IngredientItemViewHolder) {
             position--;
 
-            ((IngredientItemViewHolder) viewHolder).ingredientName.setText(
-                    recipe.getExtendedIngredients().get(position).getName());
+            String name = recipe.getExtendedIngredients().get(position).getName();
+            boolean flag = false;
+            for(String inputIngredient : inputIngredients){
+                inputIngredient = inputIngredient.trim();
+                if(!inputIngredient.equals("") && name.contains(inputIngredient)){
+                    flag = true;
+                    break;
+                }
+            }
+
+            if(!flag){
+                ((IngredientItemViewHolder) viewHolder).ingredientName.setTextColor(Color.parseColor("#FF4444"));
+            }
+
+            ((IngredientItemViewHolder) viewHolder).ingredientName.setText(name);
             ((IngredientItemViewHolder) viewHolder).ingredientNum.setText(
                     recipe.getExtendedIngredients().get(position).getAmount() + "  " + recipe.getExtendedIngredients().get(position).getUnit());
 
         }
 
-        if(viewHolder instanceof InstructionHeadViewHolder){
+        if (viewHolder instanceof InstructionHeadViewHolder) {
             ((InstructionHeadViewHolder) viewHolder).nutritionDetail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     //concat ingredient to make the request
                     String ingredientList = "";
-                    for(Ingredient ingredient : recipe.getExtendedIngredients()){
+                    for (Ingredient ingredient : recipe.getExtendedIngredients()) {
                         ingredientList += ingredient.getAmount() + " " + ingredient.getUnit() + " " + ingredient.getName() + "\\n";
                     }
                     ingredientList = ingredientList.substring(0, ingredientList.length() - 2);
@@ -196,7 +209,7 @@ public class DetailListAdapter extends RecyclerView.Adapter{
             });
         }
 
-        if(viewHolder instanceof InstructionItemViewHolder){
+        if (viewHolder instanceof InstructionItemViewHolder) {
             position = position - 2 - recipe.getExtendedIngredients().size();
 
             ((InstructionItemViewHolder) viewHolder).step.setText(
@@ -204,17 +217,17 @@ public class DetailListAdapter extends RecyclerView.Adapter{
             );
         }
 
-        if(viewHolder instanceof CommentButtonsItemViewHolder){
+        if (viewHolder instanceof CommentButtonsItemViewHolder) {
 
-            ((CommentButtonsItemViewHolder) viewHolder).write_comment.setOnClickListener(new View.OnClickListener(){
+            ((CommentButtonsItemViewHolder) viewHolder).write_comment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = CommentWriteActivity.newIntent(mContext, recipe.getId());
+                    Intent i = CommentWriteActivity.newIntent(mContext, recipe.getId(), inputIngredients);
                     mContext.startActivity(i);
                 }
             });
 
-            ((CommentButtonsItemViewHolder) viewHolder).view_comment.setOnClickListener(new View.OnClickListener(){
+            ((CommentButtonsItemViewHolder) viewHolder).view_comment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent i = CommentListActivity.newIntent(mContext, recipe.getId());
@@ -227,16 +240,15 @@ public class DetailListAdapter extends RecyclerView.Adapter{
 
 
     /**
-     *layout helper
+     * layout helper
      */
-    class IngredientHeadViewHolder extends RecyclerView.ViewHolder
-    {
+    class IngredientHeadViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView title;
         ImageButton likeButton;
         TextView likeNumberView;
 
-        public IngredientHeadViewHolder(View view){
+        public IngredientHeadViewHolder(View view) {
             super(view);
 
             imageView = (ImageView) view.findViewById(R.id.imageView);
@@ -250,8 +262,8 @@ public class DetailListAdapter extends RecyclerView.Adapter{
         /**
          * ingredient name
          */
-         TextView ingredientName;
-         TextView ingredientNum;
+        TextView ingredientName;
+        TextView ingredientNum;
 
         public IngredientItemViewHolder(View view) {
             super(view);
@@ -261,8 +273,7 @@ public class DetailListAdapter extends RecyclerView.Adapter{
         }
     }
 
-    class InstructionHeadViewHolder extends RecyclerView.ViewHolder
-    {
+    class InstructionHeadViewHolder extends RecyclerView.ViewHolder {
         /**
          * click to show nutrition detail
          */
@@ -275,12 +286,11 @@ public class DetailListAdapter extends RecyclerView.Adapter{
         }
     }
 
-    class InstructionItemViewHolder extends RecyclerView.ViewHolder
-    {
+    class InstructionItemViewHolder extends RecyclerView.ViewHolder {
         /**
          * instruction content
          */
-         TextView step;
+        TextView step;
 
         public InstructionItemViewHolder(View view) {
             super(view);
@@ -289,7 +299,7 @@ public class DetailListAdapter extends RecyclerView.Adapter{
         }
     }
 
-    class CommentButtonsItemViewHolder extends RecyclerView.ViewHolder{
+    class CommentButtonsItemViewHolder extends RecyclerView.ViewHolder {
 
         Button write_comment;
         Button view_comment;

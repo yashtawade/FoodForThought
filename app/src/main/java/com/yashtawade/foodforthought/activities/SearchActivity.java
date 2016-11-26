@@ -39,7 +39,7 @@ public class SearchActivity extends AppCompatActivity {
     private int number = 20;
     private boolean fillIngredients = true;
     private boolean limitLicense = false;
-
+    private String[] inputIngredients;
 
     private List<Recipe> result_list = new ArrayList<Recipe>();
 
@@ -90,7 +90,7 @@ public class SearchActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                     int recipeId = result_list.get(position).getId();
-                    Intent i = RecipeDetailActivity.newIntent(SearchActivity.this, recipeId);
+                    Intent i = RecipeDetailActivity.newIntent(SearchActivity.this, recipeId, inputIngredients);
                     startActivity(i);
                 }
             });
@@ -129,11 +129,11 @@ public class SearchActivity extends AppCompatActivity {
                 search_recipe_edit_text = (EditText) findViewById(R.id.search_recipe_edit_text);
                 String input = search_recipe_edit_text.getEditableText().toString();
 
-                String[] ingredients = input.split(",");
+                inputIngredients = input.split(",");
                 String url = FFTConstant.API_BASE_URL + keyword + "?fillIngredients=" + fillIngredients
                         + "&limitLicense=" + limitLicense + "&number=" + number + "&ranking=" + ranking + "&ingredients=";
                 //add ingredients' name to concat the url
-                for(String ingredient : ingredients) {
+                for(String ingredient : inputIngredients) {
                     url = url + ingredient.trim() + ",";
                 }
                 url = url.substring(0, url.length() - 1);   //delete the useless ,

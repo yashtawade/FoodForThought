@@ -23,7 +23,9 @@ import okhttp3.Response;
 public class CommentWriteActivity extends AppCompatActivity {
     private String keyword = "recipe/comment";
     private static final String EXTRA_RECIPE_ID = "fft_recipe_id";
+    private static final String EXTRA_INPUT_INGREDIENTS = "fft_input_ingredients";
 
+    private String[] inputIngredients;
     private int uid;
 
     BaseHttpRequestCallback mCallback = new BaseHttpRequestCallback(){
@@ -33,7 +35,7 @@ public class CommentWriteActivity extends AppCompatActivity {
             DataParse dp = JSON.parseObject(response, DataParse.class);
             if(dp.getError() == 0){
                 int rid = getIntent().getIntExtra(EXTRA_RECIPE_ID, 0);
-                Intent i = RecipeDetailActivity.newIntent(CommentWriteActivity.this, rid);
+                Intent i = RecipeDetailActivity.newIntent(CommentWriteActivity.this, rid, inputIngredients);
                 startActivity(i);
             }
         }
@@ -46,6 +48,8 @@ public class CommentWriteActivity extends AppCompatActivity {
 
         SharedPreferences sp = getSharedPreferences("Login", Context.MODE_PRIVATE);
         uid = sp.getInt("uid", 0);
+
+        inputIngredients = getIntent().getStringArrayExtra(EXTRA_INPUT_INGREDIENTS);
 
         final EditText comment_edit_text = (EditText) findViewById(R.id.comment_write_edit_text);
         Button comment_submit_button = (Button) findViewById(R.id.comment_write_submit_button);
@@ -65,9 +69,10 @@ public class CommentWriteActivity extends AppCompatActivity {
         });
     }
 
-    public static Intent newIntent(Context packageContext, int recipeId) {
+    public static Intent newIntent(Context packageContext, int recipeId, String[] inputIngredients) {
         Intent i = new Intent(packageContext, CommentWriteActivity.class);
         i.putExtra(EXTRA_RECIPE_ID, recipeId);
+        i.putExtra(EXTRA_INPUT_INGREDIENTS, inputIngredients);
         return i;
     }
 }
