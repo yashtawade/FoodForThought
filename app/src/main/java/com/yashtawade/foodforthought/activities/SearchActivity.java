@@ -7,9 +7,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -19,6 +21,7 @@ import com.yashtawade.foodforthought.R;
 import com.yashtawade.foodforthought.adapters.ImgListAdapter;
 import com.yashtawade.foodforthought.constants.FFTConstant;
 import com.yashtawade.foodforthought.models.Recipe;
+import com.yashtawade.foodforthought.models.Result;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +37,13 @@ public class SearchActivity extends AppCompatActivity {
     public ImgListAdapter adapter;
     public ProgressDialog dialog;
 
-    private String keyword = "findByIngredients";
+    private String keyword = "searchComplex";
     private int ranking = 2;
     private int number = 20;
+    private int offset = 0;
     private boolean fillIngredients = true;
     private boolean limitLicense = false;
+
     private String[] inputIngredients;
 
     private List<Recipe> result_list = new ArrayList<Recipe>();
@@ -48,7 +53,10 @@ public class SearchActivity extends AppCompatActivity {
 
         @Override
         public void onResponse(Response httpResponse, String response, Headers headers) {
-            List<Recipe> recipes = JSON.parseArray(response, Recipe.class);
+
+//            List<Recipe> recipes = JSON.parseArray(response, Recipe.class);
+            Result recipeResult = JSON.parseObject(response, Result.class);
+            List<Recipe> recipes = recipeResult.getResults();
 
             //clear the result from the last search
             result_list.clear();
@@ -130,13 +138,32 @@ public class SearchActivity extends AppCompatActivity {
                 String input = search_recipe_edit_text.getEditableText().toString();
 
                 inputIngredients = input.split(",");
-                String url = FFTConstant.API_BASE_URL + keyword + "?fillIngredients=" + fillIngredients
-                        + "&limitLicense=" + limitLicense + "&number=" + number + "&ranking=" + ranking + "&ingredients=";
+                String url = FFTConstant.API_BASE_URL + keyword + "?fillIngredients=" + fillIngredients + "&offset=" + offset
+                        + "&limitLicense=" + limitLicense + "&number=" + number + "&ranking=" + ranking + "&includeIngredients=";
                 //add ingredients' name to concat the url
                 for(String ingredient : inputIngredients) {
                     url = url + ingredient.trim() + ",";
                 }
-                url = url.substring(0, url.length() - 1);   //delete the useless ,
+                url = url.substring(0, url.length() - 1);   //delete the useless
+
+
+                CheckBox cb_american = (CheckBox)findViewById(R.id.CB_american);
+                if(cb_american.isChecked()){
+                    String cuisine = "american";
+                    url += "&cuisine=" + cuisine;
+                }
+
+                CheckBox cb_maxCalories = (CheckBox)findViewById(R.id.CB_maxCalories);
+                if(cb_maxCalories.isChecked()){
+                    int maxCalories = 50;
+                    url += "&maxCalories=" + maxCalories;
+                }
+
+                CheckBox cb_maxFat = (CheckBox)findViewById(R.id.CB_maxFat);
+                if(cb_maxFat.isChecked()){
+                    int maxFat = 10;
+                    url += "&maxFat=" + maxFat;
+                }
 
                 //send asynchronous http request
                 Http httpRequest = new Http();

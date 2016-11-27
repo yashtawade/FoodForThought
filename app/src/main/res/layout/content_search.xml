@@ -44,11 +44,37 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:id="@+id/CB_american"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="American Style"/>
+
+        <CheckBox
+            android:id="@+id/CB_maxCalories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calories &lt;500"/>
+
+        <CheckBox
+            android:id="@+id/CB_maxFat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fat &lt;10g"/>
+
+    </LinearLayout>
+
+
     <ListView
         android:id="@+id/recipe_result"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_below="@+id/search_recipe_button"
+        android:layout_below="@+id/CB_american"
         android:divider="#ff909090"
         android:dividerHeight="1dp"
         android:layout_weight="1"
