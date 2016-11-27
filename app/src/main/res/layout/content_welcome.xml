@@ -25,6 +25,7 @@
         android:textSize="36sp" />
 
     <Button
+        android:visibility="invisible"
         android:text="Missing ingredient?"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,9 +40,13 @@
         android:text="Recipe Search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/missing"
+        android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="68dp"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
+        android:textSize="16sp"
+        android:textAllCaps="false"
         android:id="@+id/search_recipe_welcome_button"
         android:background="@android:color/holo_orange_dark"
         android:textColor="@android:color/background_light" />

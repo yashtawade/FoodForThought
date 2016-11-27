@@ -19,7 +19,7 @@ public class MyApplication extends Application{
         OkHttpFinalConfiguration.Builder builder =
                 new OkHttpFinalConfiguration.Builder();
         //standard http request header
-        Headers commonHeaders = new Headers.Builder().add(FFTConstant.API_KEY).build();
+        Headers commonHeaders = new Headers.Builder().add(FFTConstant.RECIPE_API_KEY).build();
         builder.setCommenHeaders(commonHeaders);
 
         OkHttpFinal.getInstance().init(builder.build());

@@ -45,12 +45,29 @@
 
 
 
-    <TextView
-        android:id="@+id/type"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginTop="20dp"
-        android:text="Ingredients:"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="6dp">
+
+        <TextView
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="Ingredients:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/find_supermarket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="@color/linkBlue"
+            android:text="Find supermarket nearby"/>
+
+    </RelativeLayout>
+
 </LinearLayout>

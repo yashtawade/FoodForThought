@@ -20,6 +20,7 @@ import com.yashtawade.foodforthought.Http;
 import com.yashtawade.foodforthought.R;
 import com.yashtawade.foodforthought.activities.CommentListActivity;
 import com.yashtawade.foodforthought.activities.CommentWriteActivity;
+import com.yashtawade.foodforthought.activities.NearbyActivity;
 import com.yashtawade.foodforthought.activities.NutritionActivity;
 import com.yashtawade.foodforthought.constants.FFTConstant;
 import com.yashtawade.foodforthought.models.DataParse;
@@ -167,6 +168,14 @@ public class DetailListAdapter extends RecyclerView.Adapter {
 
                 }
             });
+
+            ((IngredientHeadViewHolder) viewHolder).findSupermaket.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    Intent i = NearbyActivity.newIntent(mContext, "supermarket");
+                    mContext.startActivity(i);
+                }
+            });
         }
 
         if (viewHolder instanceof IngredientItemViewHolder) {
@@ -247,6 +256,7 @@ public class DetailListAdapter extends RecyclerView.Adapter {
         TextView title;
         ImageButton likeButton;
         TextView likeNumberView;
+        TextView findSupermaket;
 
         public IngredientHeadViewHolder(View view) {
             super(view);
@@ -255,6 +265,7 @@ public class DetailListAdapter extends RecyclerView.Adapter {
             title = (TextView) view.findViewById(R.id.title);
             likeButton = (ImageButton) view.findViewById(R.id.like_button);
             likeNumberView = (TextView) view.findViewById(R.id.like_number_text_view);
+            findSupermaket = (TextView) view.findViewById(R.id.find_supermarket);
         }
     }
 

@@ -1,14 +1,11 @@
 package com.yashtawade.foodforthought.activities;
 
-import android.content.pm.PackageManager;
+import android.content.Context;
+import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -19,28 +16,27 @@ import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.location.LocationListener;
+
+import android.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.LocationSource;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.vision.text.Text;
 import com.yashtawade.foodforthought.GooglePlacesReadTask;
 import com.yashtawade.foodforthought.R;
+import com.yashtawade.foodforthought.constants.FFTConstant;
 
-public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallback{
-
-
-    private static final String GOOGLE_API_KEY = "AIzaSyD-dpypUOszI9vXG_-N-MeoVwDnYeQgdYk";
-    GoogleMap googleMap;
-    EditText placeText;
-    double latitude = 32.7255080;
-    double longitude = -97.1207690;
+public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
+    private static final String GOOGLE_API_KEY = FFTConstant.GOOGLE_MAP_API_KEY;
+    private static final String EXTRA_SEARCH_KEYWORD = "fft_search_keyword";
+    double latitude;
+    double longitude;
+    public String keyword;
     private int PROXIMITY_RADIUS = 5000;
     SupportMapFragment fragment;
+
+    TextView mSearchEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +46,11 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-        //show error dialog if GoolglePlayServices not available
+        //show error dialog if GooglePlayServices not available
         if (!isGooglePlayServicesAvailable()) {
             finish();
         }
-//
+
         fragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.googleMap);
         fragment.getMapAsync(this);
 
@@ -85,33 +80,82 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
         Criteria criteria = new Criteria();
         String bestProvider = locationManager.getBestProvider(criteria, true);
         Location location = locationManager.getLastKnownLocation(bestProvider);
-        final TextView tv;
-//        tv = (TextView) findViewById(R.id.editText3);
+        if(location != null){
+            longitude = location.getLongitude();
+            latitude = location.getLatitude();
+        }else{
+            longitude = -97.1208;
+            latitude = 32.7255;
+        }
+
+        mSearchEdit = (TextView) findViewById(R.id.search_nearby_edit_text);
 
         LatLng latLng = new LatLng(latitude, longitude);
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         googleMap.animateCamera(CameraUpdateFactory.zoomTo(12));
 
-        //locationManager.requestLocationUpdates(bestProvider, 20000, 0, this);
+        locationManager.requestLocationUpdates(bestProvider, 20000, 1, this);
+
+        StringBuilder sb = buildGooglePlaceUrl();
+        keyword = getIntent().getStringExtra(EXTRA_SEARCH_KEYWORD);
+        sb.append("&keyword=" + keyword);
+        Log.d("link: ",sb.toString());
+        googlePlaceExecute(sb.toString(), googleMap);
 
         btnFind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String type = "supermarket";
-                StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
-                googlePlacesUrl.append("location=" + latitude + "," + longitude);
-                googlePlacesUrl.append("&radius=" + PROXIMITY_RADIUS);
-                googlePlacesUrl.append("&keyword=" + type);
-                googlePlacesUrl.append("&sensor=true");
-                googlePlacesUrl.append("&key=" + GOOGLE_API_KEY);
-                Log.d("link: ",googlePlacesUrl.toString());
-
-                GooglePlacesReadTask googlePlacesReadTask = new GooglePlacesReadTask();
-                Object[] toPass = new Object[2];
-                toPass[0] = googleMap;
-                toPass[1] = googlePlacesUrl.toString();
-                googlePlacesReadTask.execute(toPass);
+                StringBuilder sb = buildGooglePlaceUrl();
+                keyword = mSearchEdit.getText().toString();
+                sb.append("&keyword=" + keyword);
+                Log.d("link: ",sb.toString());
+                googlePlaceExecute(sb.toString(), googleMap);
             }
         });
+    }
+
+    private StringBuilder buildGooglePlaceUrl(){
+        StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
+        googlePlacesUrl.append("location=" + latitude + "," + longitude);
+        googlePlacesUrl.append("&radius=" + PROXIMITY_RADIUS);
+        googlePlacesUrl.append("&sensor=true");
+        googlePlacesUrl.append("&key=" + GOOGLE_API_KEY);
+
+        return googlePlacesUrl;
+    }
+
+    private void googlePlaceExecute(String s, GoogleMap googleMap){
+        GooglePlacesReadTask googlePlacesReadTask = new GooglePlacesReadTask();
+        Object[] toPass = new Object[2];
+        toPass[0] = googleMap;
+        toPass[1] = s;
+        googlePlacesReadTask.execute(toPass);
+    }
+
+    public static Intent newIntent(Context mContext, String keyword){
+        Intent i = new Intent(mContext, NearbyActivity.class);
+        i.putExtra(EXTRA_SEARCH_KEYWORD, keyword);
+        return i;
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+
     }
 }
