@@ -29,6 +29,9 @@ import okhttp3.Response;
 
 public class RegisterActivity extends Activity {
 
+    /**
+     * Check the registration status and call the new activity
+     */
     BaseHttpRequestCallback mCallback = new BaseHttpRequestCallback(){
         @Override
         public void onResponse(Response httpResponse, String response, Headers headers){
@@ -40,7 +43,6 @@ public class RegisterActivity extends Activity {
             }else if(dp == null){
                 Toast.makeText(RegisterActivity.this, "Error", Toast.LENGTH_SHORT).show();
             }else{
-                //TODO exception type not specified
                 Toast.makeText(RegisterActivity.this, "Email has been registered", Toast.LENGTH_SHORT).show();
             }
         }

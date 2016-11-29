@@ -20,14 +20,22 @@ import cn.finalteam.okhttpfinal.RequestParams;
 import okhttp3.Headers;
 import okhttp3.Response;
 
+/**
+ * This is the Activity for user to write comment
+ */
 public class CommentWriteActivity extends AppCompatActivity {
+    //part of the url string
     private String keyword = "recipe/comment";
     private static final String EXTRA_RECIPE_ID = "fft_recipe_id";
     private static final String EXTRA_INPUT_INGREDIENTS = "fft_input_ingredients";
 
+    //store the input ingredients to highlight the missing ones
     private String[] inputIngredients;
     private int uid;
 
+    /**
+     * Call the RecipeDetailActivity after server gives the success message
+     */
     BaseHttpRequestCallback mCallback = new BaseHttpRequestCallback(){
 
         @Override
@@ -46,6 +54,9 @@ public class CommentWriteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment_write);
 
+        /**
+         * Get uid from sharedPreference
+         */
         SharedPreferences sp = getSharedPreferences("Login", Context.MODE_PRIVATE);
         uid = sp.getInt("uid", 0);
 
@@ -69,6 +80,9 @@ public class CommentWriteActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * For other activity to send recipe id and input ingredients to the CommentListActivity
+     */
     public static Intent newIntent(Context packageContext, int recipeId, String[] inputIngredients) {
         Intent i = new Intent(packageContext, CommentWriteActivity.class);
         i.putExtra(EXTRA_RECIPE_ID, recipeId);

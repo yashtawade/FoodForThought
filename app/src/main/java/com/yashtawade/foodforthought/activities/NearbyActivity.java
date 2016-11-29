@@ -146,16 +146,16 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
 
     @Override
     public void onStatusChanged(String s, int i, Bundle bundle) {
-
+        //do nothing
     }
 
     @Override
     public void onProviderEnabled(String s) {
-
+        //do nothing
     }
 
     @Override
     public void onProviderDisabled(String s) {
-
+        //do nothing
     }
 }

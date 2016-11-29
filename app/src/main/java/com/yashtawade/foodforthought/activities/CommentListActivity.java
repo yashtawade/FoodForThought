@@ -23,6 +23,9 @@ import cn.finalteam.okhttpfinal.BaseHttpRequestCallback;
 import okhttp3.Headers;
 import okhttp3.Response;
 
+/**
+ * This is the activity to show the comments
+ */
 public class CommentListActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, LoadMoreListView.OnRefreshListener{
     private SwipeRefreshLayout swipeRefreshLayout;
     private LoadMoreListView loadMoreListView;
@@ -31,11 +34,15 @@ public class CommentListActivity extends AppCompatActivity implements SwipeRefre
     private CommentListAdapter adapter;
     //get recipe id through intent
     private static final String EXTRA_RECIPE_ID = "fft_recipe_id";
+    //part of the http request url
     private String keyword = "recipe/comment";
     private List<Comment> commentList;
     //get comments before lastCommentDate
     private int lastCommentTime;
 
+    /**
+     * After the GET request, callback parse the JSON data and call the adapter to render the view
+     */
     BaseHttpRequestCallback mCallback1 = new BaseHttpRequestCallback(){
 
         @Override
@@ -62,6 +69,9 @@ public class CommentListActivity extends AppCompatActivity implements SwipeRefre
         }
     };
 
+    /**
+     * For the loading more functionality, add the comment list to the origin list and then render the view
+     */
     BaseHttpRequestCallback mCallback2 = new BaseHttpRequestCallback(){
 
         @Override
@@ -151,6 +161,9 @@ public class CommentListActivity extends AppCompatActivity implements SwipeRefre
         }, 1000);
     }
 
+    /**
+     * Request new data when pull down to refresh
+     */
     private void setRefreshData() {
         int recipeId = getIntent().getIntExtra(EXTRA_RECIPE_ID, 0);
         String url = FFTConstant.LONG_BASE_URL + keyword + "?rid=" + recipeId;
@@ -177,6 +190,9 @@ public class CommentListActivity extends AppCompatActivity implements SwipeRefre
         }, 1000);
     }
 
+    /**
+     * Request more data when pulling up to load more
+     */
     private void setLoadingMoreData(){
         int recipeId = getIntent().getIntExtra(EXTRA_RECIPE_ID, 0);
         String url = FFTConstant.LONG_BASE_URL + keyword + "?rid=" + recipeId + "&lastCommentTime=" + lastCommentTime;
@@ -184,6 +200,9 @@ public class CommentListActivity extends AppCompatActivity implements SwipeRefre
         httpRequest.get(url, mCallback2);
     }
 
+    /**
+     * For other activity to send recipe id to the CommentListActivity
+     */
     public static Intent newIntent(Context packageContext, int recipeId) {
         Intent i = new Intent(packageContext, CommentListActivity.class);
         i.putExtra(EXTRA_RECIPE_ID, recipeId);

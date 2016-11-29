@@ -25,6 +25,9 @@ import okhttp3.Response;
 public class ProfileActivity extends AppCompatActivity {
     private static final String EXTRA_USER_ID = "fft_user_id";
 
+    /**
+     * Render the profile page after getting the data from the server
+     */
     BaseHttpRequestCallback mCallback = new BaseHttpRequestCallback(){
         @Override
         public void onResponse(Response httpResponse, String response, Headers headers){

@@ -69,10 +69,12 @@ public class RecipeDetailActivity extends AppCompatActivity {
     int count;
     boolean isLiked;
 
-    private ArcMenu shareBut; // xiaolei
+    private ArcMenu shareBut;
 
 
-    //recipe information callback
+    /**
+     * Store the recipe information from the server response
+     */
     BaseHttpRequestCallback mCallback1 = new BaseHttpRequestCallback() {
         @Override
         public void onResponse(Response httpResponse, String response, Headers headers) {
@@ -82,7 +84,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
     };
 
-    //recipe instruction callback
+    /**
+     * Parse and store the instruction step from the response
+     */
     BaseHttpRequestCallback mCallback2 = new BaseHttpRequestCallback() {
         @Override
         public void onResponse(Response httpResponse, String response, Headers headers) {
@@ -110,7 +114,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
     };
 
-    //recipe like number callback
+    /**
+     * Get the number of likes of recipes from server
+     */
     BaseHttpRequestCallback mCallback3 = new BaseHttpRequestCallback(){
         @Override
         public void onResponse(Response httpResponse, String response, Headers headers) {
@@ -124,7 +130,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
     };
 
-    //recipe like info callback
+    /**
+     * Toggle the like
+     */
     BaseHttpRequestCallback mCallback4 = new BaseHttpRequestCallback(){
         @Override
         public void onResponse(Response httpResponse, String response, Headers headers) {
@@ -140,6 +148,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Render the RecipeDetailActivity after all the callbacks are called
+     */
     public void setList() {
         if (getSteps && getIngredients && getCount && getLiked) {
 

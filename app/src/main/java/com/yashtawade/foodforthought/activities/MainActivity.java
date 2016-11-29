@@ -30,11 +30,17 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
     public ProgressDialog dialog;
+    //Check if the user is logged out
     private boolean isLogOut;
 
     private String email;
     private String password;
 
+    /**
+     * After the user clicks sign in, check the user's credential
+     * If succeed, go to the WelcomeActivity and save user's credential
+     * If fail, send the prompt
+     */
     BaseHttpRequestCallback mCallback = new BaseHttpRequestCallback(){
         @Override
         public void onResponse(Response httpResponse, String response, Headers headers){
@@ -59,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Called after user click register button
+     */
     public void clickRegister(View view){
         if (view.getId() == R.id.register){
             Intent i = new Intent(MainActivity.this, RegisterActivity.class);
@@ -66,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,22 +104,7 @@ public class MainActivity extends AppCompatActivity {
                     email = ((EditText)findViewById(R.id.username)).getText().toString();
                     password = ((EditText)findViewById(R.id.password)).getText().toString();
 
-                    MessageDigest md = null;
-                    try {
-                        md = MessageDigest.getInstance("MD5");
-                    } catch (NoSuchAlgorithmException e) {
-                        e.printStackTrace();
-                    }
-                    md.update(password.getBytes());
-
-                    byte byteData[] = md.digest();
-
-                    //convert the byte to hex format
-                    StringBuilder sb = new StringBuilder();
-                    for (int i = 0; i < byteData.length; i++) {
-                        sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
-                    }
-                    password = sb.toString();
+                    password = encrypt(password);
 
                     String url = FFTConstant.LONG_BASE_URL + "user/login";
 
@@ -130,6 +125,29 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
         }
 
+    }
+
+    /**
+     * Encrypt the password using md5 algorithm
+     */
+    private String encrypt(String s){
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        md.update(s.getBytes());
+
+        byte byteData[] = md.digest();
+
+        //convert the byte to hex format
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < byteData.length; i++) {
+            sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+        }
+
+        return sb.toString();
     }
 
     public static Intent newIntent(Context mContext, boolean isLogOut){

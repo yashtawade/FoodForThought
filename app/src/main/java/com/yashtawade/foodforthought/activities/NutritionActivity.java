@@ -20,7 +20,9 @@ public class NutritionActivity extends AppCompatActivity {
     private static final String EXTRA_INGREDIENT_LIST = "fft_ingredient_list";
     private String keyword = "visualizeNutrition";
 
-
+    /**
+     * Render the WebView with the html response
+     */
     BaseHttpRequestCallback mCallback = new BaseHttpRequestCallback(){
 
         @Override
