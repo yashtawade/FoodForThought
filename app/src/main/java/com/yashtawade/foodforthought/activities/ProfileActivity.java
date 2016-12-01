@@ -23,8 +23,8 @@ import okhttp3.Headers;
 import okhttp3.Response;
 
 public class ProfileActivity extends AppCompatActivity {
-    private static final String EXTRA_USER_ID = "fft_user_id";
 
+    int uid;
     /**
      * Render the profile page after getting the data from the server
      */
@@ -35,7 +35,7 @@ public class ProfileActivity extends AppCompatActivity {
             if(dp.getError() == 0){
                 User user = JSON.parseObject(dp.getData(), User.class);
                 ImageView imageView = (ImageView) findViewById(R.id.profile_image);
-                if(user.getProfilePicture() != null){
+                if(user.getProfilePicture() != null && user.getProfilePicture().length() > 10){
                     Picasso.with(ProfileActivity.this).load(user.getProfilePicture()).into(imageView);
                     imageView.setClipToOutline(true);
                 }else{
@@ -58,7 +58,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         SharedPreferences sp = getSharedPreferences("Login", Context.MODE_PRIVATE);
-        int uid = sp.getInt("uid", 0);
+        uid = sp.getInt("uid", 0);
         String url = FFTConstant.LONG_BASE_URL + "user/profile?uid=" + uid;
 
         Http httpRequest = new Http();
@@ -73,6 +73,15 @@ public class ProfileActivity extends AppCompatActivity {
                 sp.edit().putString("password", null).apply();
                 sp.edit().putInt("uid", 0).apply();
                 Intent i = MainActivity.newIntent(ProfileActivity.this, true);
+                startActivity(i);
+            }
+        });
+
+        Button profileEdit = (Button) findViewById(R.id.edit_profile_button);
+        profileEdit.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent i = ProfileEditActivity.newIntent(ProfileActivity.this, uid);
                 startActivity(i);
             }
         });
